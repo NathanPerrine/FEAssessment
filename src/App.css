@@ -49,3 +49,7 @@ body {
     height: 3em;
     overflow: hidden;
 }
+
+input:focus{
+    outline: none;
+}

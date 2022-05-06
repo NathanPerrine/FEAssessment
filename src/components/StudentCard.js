@@ -17,8 +17,13 @@ export default function StudentCard(props) {
     );
 
     const addTags = (e) => {
-        setTags([...tags, e.target.value]);
-        console.log(tags)
+        let tag = e.target.value;
+        if (tags == null){
+            setTags([tag])
+        }
+        else{
+            setTags([...tags, tag]);
+        }
     }
 
     return (
@@ -51,11 +56,13 @@ export default function StudentCard(props) {
                                 {grades}
                             </div>
                             <div className="row m-2">
-                                {tags.map((tag, index) => (
+                                { tags ? 
+                                tags.map((tag, index) => (
                                     <div key={index} className="card bg-light d-flex justify-content-center align-items-center tag">
-                                        {tag}
+                                    {tag}
                                     </div>
-                                ))}
+                                    ))
+                                : null}
                             </div>
                             <div>
                                 {/* input on Enter key down, sends event and student id to parent, calls addTags locally, clears input */}

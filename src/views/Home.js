@@ -17,9 +17,11 @@ export default function Home() {
         fetch("https://api.hatchways.io/assessment/students", requestOptions)
             .then(res => res.json())
             .then(data => {
+                // Data is stored under the 'students' key
                 data = data['students']
+                // Loop through data and add a 'tags' section before it goes through to any other sections
                 for(let i = 0; i < data.length; i++){
-                    data[i]['tags'] = []
+                    data[i]['tags'] = null
                 }
                 setStudents(data)
         })
@@ -42,18 +44,20 @@ export default function Home() {
 
     let tagFilteredStudents = filteredStudents.filter(
         (student) => {
-            console.log(student.tags)
             if (searchTag === ""){return true}
-            else {
-                for (let tag of student.tags){
-                    if (tag.includes(searchTag)) {return true}
+            else if (student.tags !== null){
+                    for (let tag of student.tags){
+                        if (tag.includes(searchTag)) {return true}
+                    }
                 }
-            }
             return false
         }
     )
 
     const enterHandler = (e, id) => {
+        if (students[id]['tags'] == null){
+            students[id]['tags'] = []
+        }
         students[id]['tags'].push(e.target.value)
     };
 
