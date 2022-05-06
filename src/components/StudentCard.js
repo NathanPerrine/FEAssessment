@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function StudentCard(props) {
     const student = props.student;
     const average = student.grades.reduce((a, b) => parseInt(a) + parseInt(b)) / student.grades.length;
+    const [tags, setTags] = useState(student.tags)
 
-    const grades = student.grades.map((grade, index) =>
-        <div className="row">
+    var grades = student.grades.map((grade, index) =>
+        <div key={index} className="row">
             <div className="col-2">
                 <p className="card-text">Test {index + 1}:</p>
             </div>
@@ -15,9 +16,10 @@ export default function StudentCard(props) {
         </div>
     );
 
-    function enterHandler(e){
-        console.log(e.target.value)
-    };
+    const addTags = (e) => {
+        setTags([...tags, e.target.value]);
+        console.log(tags)
+    }
 
     return (
         <>
@@ -48,9 +50,21 @@ export default function StudentCard(props) {
                             <div className="collapse mt-3" id={`collapse${ student.id }`}>
                                 {grades}
                             </div>
-
+                            <div className="row m-2">
+                                {tags.map((tag, index) => (
+                                    <div key={index} className="card bg-light d-flex justify-content-center align-items-center tag">
+                                        {tag}
+                                    </div>
+                                ))}
+                            </div>
                             <div>
-                                <input type="text" onKeyDown={(e) => {if (e.key === "Enter") {enterHandler(e)}} } placeholder="Add a tag" />
+                                {/* input on Enter key down, sends event and student id to parent, calls addTags locally, clears input */}
+                                <input id="tag-entry" type="text" onKeyDown={(e) => {if (e.key === "Enter" && e.target.value !== "") {
+                                    props.enterHandler(e, student.id-1)
+                                    addTags(e)
+                                    e.target.value = ""
+                                    }} } 
+                                    placeholder="Add a tag" />
                             </div>
                         </div>
                     </div>

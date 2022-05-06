@@ -21,10 +21,10 @@ body {
 .card-text{
     margin-bottom: 0;
     font-size: 20px;
-    color: gray;
+    /* color: gray; */
 }
 
-#student-filter{
+.student-filter{
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -34,6 +34,18 @@ body {
     font-size: 30px;
 }
 
+#tag-entry{
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
 .fa-plus{
     color: gray;
+}
+
+.tag{
+    min-width: 5rem;
+    width: auto;
+    height: 3em;
+    overflow: hidden;
 }
